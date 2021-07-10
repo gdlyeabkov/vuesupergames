@@ -16,8 +16,8 @@
       <input type="checkbox" v-model="gamefree" id="inputFree" class="gamefree form-control">
       <input v-model="gamecost" type="number" value="0" id="inputCost" class="gamecost form-control" placeholder="Cost" required="">
       
-      <label for="inputPassword" class="sr-only">Image Url</label>
-      <input v-model="gameimageurl" type="text" id="inputUrl" class="gameimageurl form-control" placeholder="imageurl" required="">
+      <!-- <label for="inputPassword" class="sr-only">Image Url</label> -->
+      <!-- <input v-model="gameimageurl" type="text" id="inputUrl" class="gameimageurl form-control" placeholder="imageurl" required=""> -->
       
       <label for="inputGenre" class="sr-only">Genre</label>
       <select v-model="gamegenre" style="display: block; margin:auto; min-width: 300px;"  id="inputGenre" class="gamegenre" size="3" name="hero[]">
@@ -26,10 +26,17 @@
           <option  value="quests">quests</option>
           <option value="matchthree">matchthree</option>
       </select>
-      <label for="inputFile" class="sr-only">Select file:</label>
       
       <form class="registerForm" enctype="multipart/form-data"  method="POST" :action="`https://vuesupergames.herokuapp.com/games/uploads?gamename=${gamename}&gamefree=${gamefree}&gamedescription=${gamedescription}&gamecost=${gamecost}&gameimageurl=${gameimageurl}&gamegenre=${gamegenre}&touser=${touser}`">
-        <input style="max-width: 300px; margin: auto;" type="file" id="inputFile" class="gamefile form-control" name="myFile" placeholder="file" required="">
+        
+        <!-- <label for="inputFile" class="sr-only">Select image:</label> -->
+        <!-- <input style="max-width: 300px; margin: auto;" type="file" id="inputFile" class="gamefile form-control" name="myFiles" placeholder="file" required=""> -->
+        
+        <label for="inputFile" class="sr-only">Select file:</label>
+        <!-- <input style="max-width: 300px; margin: auto;" type="file" id="inputFile" class="gamefile form-control" name="myFile" placeholder="file" required=""> -->
+        <!-- <input style="max-width: 300px; margin: auto;" type="file" id="inputFile" class="gamefile form-control" name="myFiles" placeholder="file" required=""> -->
+        <input style="max-width: 300px; margin: auto;" type="file" id="inputFile" class="gamefile form-control" multiple name="myFiles" placeholder="file" required="">
+
         <input type="submit" class="btn btn-lg btn-primary btn-block registerBtn" value="Upload a file" style="min-width: 125px; max-width: 170px; display: block; margin: 15px auto;">
       </form>
       
@@ -64,7 +71,6 @@ export default {
   },
   methods:{
     upload(){
-      
       jwt.verify(this.token, 'vuesupergamessecret', (err, decoded) => {
         if(err){
             this.$router.push({ name: "UsersLogin" })

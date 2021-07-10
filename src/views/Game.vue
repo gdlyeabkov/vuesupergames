@@ -3,8 +3,11 @@
     <Header :touser="touser" />
     <Aside :touser="touser"/>
     <div class="main">
-      <img class="mb-4" :src="gameImage" alt="" width="72" height="72">
-      <button style="margin-left: 25px;" @click="install()" type="button" class="installBtn btn btn-primary">Установить</button>
+      
+      <!-- <img class="mb-4" :src="gameImage" alt="" width="72" height="72"> -->
+      <img width="85px" height="85px" :src="`https://vuesupergames.herokuapp.com/games/getimage?gamename=${gameName}`" />
+
+      <button v-if="!downloadYet" style="margin-left: 25px;" @click="install()" type="button" class="installBtn btn btn-primary">Установить</button>
       <h1 class="gameName">{{ gameName }}</h1>
       <p>Описание: {{ gameDesc }}</p>
       <p>{{ gameFree.includes("true") ? "Бесплатная" : "Цена: " + gameCost }}</p>
@@ -36,6 +39,7 @@ export default {
   name: 'Game',
   data(){
     return {
+      downloadYet: false,
       token: '',
       gameImage: "",
       touser: "",
@@ -226,7 +230,9 @@ export default {
         this.gameGenre = JSON.parse(result).gameGenre
         console.log(JSON.parse(result))
 
-        this.ratio = (this.likes / this.downloads).toString().substr(0, 3)
+        this.ratio = this.likes !== 0 && this.downloads !== 0  ? (this.likes / this.downloads).toString().substr(0, 3) : 0
+        this.downloaded = JSON.parse(result).downloaded
+        this.downloadYet = this.downloaded.includes(decoded.useremail)
 
       });
     })

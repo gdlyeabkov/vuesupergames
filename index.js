@@ -73,6 +73,7 @@ const GameSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
+    downloaded: [mongoose.Schema.Types.Map],
     sender: String,
     created: {
         default: new Date().toLocaleString(),
@@ -463,7 +464,7 @@ app.get('/game', (req, res)=>{
             }
             console.log(game)
             // res.render('game', { "gameImage": game.imageurl, "gameName": game.name, "gameDesc": game.description, "gameFree": game.free, "gameCost": game.cost, "gameCountLikes": game.likes, "gameBy": game.sender, "gameDateOfCreated": game.created, "gameCountDownloads": game.downloads, "touser": req.query.touser  })
-            res.json({ "gameImage": game.imageurl, "gameid": game._id, "gameName": game.name, "gameDesc": game.description, "gameFree": game.free, "gameCost": game.cost, "gameCountLikes": game.likes, "gameBy": game.sender, "gameDateOfCreated": game.created, "gameCountDownloads": game.downloads, "touser": req.query.touser, "gameGenre": game.genre  })
+            res.json({ "gameImage": game.imageurl, "gameid": game._id, "gameName": game.name, "gameDesc": game.description, "gameFree": game.free, "gameCost": game.cost, "gameCountLikes": game.likes, "gameBy": game.sender, "gameDateOfCreated": game.created, "gameCountDownloads": game.downloads, "touser": req.query.touser, "gameGenre": game.genre,  "downloaded": game.downloaded })
         });  
     })
 })
@@ -549,7 +550,14 @@ app.get('/games/downloads', (req, res)=>{
             if(game != null && game != undefined){
                 GameModel.updateOne({ name: req.query.gamename }, 
                 { 
-                    "$inc": { "downloads": 1 }
+                    "$inc": { "downloads": 1 },
+                    "$push": { 
+                        downloaded: [
+                            {
+                                name: req.query.touser
+                            }
+                        ]
+                    }
                 }, async (err) => {
                     // try {
                         // res.setHeader('Content-disposition', 'attachment; filename=textFile.txt');
@@ -852,7 +860,9 @@ app.get('/users/usercreatesuccess',async (req, res)=>{
 //     }
 // })
 
-app.post('/games/uploads', upload.single('myFile'), (req, res)=>{
+
+// app.post('/games/uploads', upload.single('myFile'), (req, res)=>{
+app.post('/games/uploads', upload.array('myFiles', 2), (req, res)=>{
     
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Credentials', true);
@@ -860,7 +870,9 @@ app.post('/games/uploads', upload.single('myFile'), (req, res)=>{
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE");
 
     
-    const file = req.file
+    // const file = req.file
+    const file = req.files
+
     if(!file){
         console.log("Error to upload file ")
     }
@@ -887,7 +899,10 @@ app.post('/games/uploads', upload.single('myFile'), (req, res)=>{
             return res.send('rollback')
         } else {
             console.log('создание', req.query.gamename in allGames)
+
+            // const game = new GameModel({ name: req.query.gamename, description:req.query.gamedescription, cost: req.query.gamecost, imageurl: req.query.gameimageurl, sender: req.query.touser, free: req.query.gamefree, genre: req.query.gamegenre });
             const game = new GameModel({ name: req.query.gamename, description:req.query.gamedescription, cost: req.query.gamecost, imageurl: req.query.gameimageurl, sender: req.query.touser, free: req.query.gamefree, genre: req.query.gamegenre });
+
             game.save(async function (err) {
                 if(err){
                     console.log('создание ошибка')
@@ -928,6 +943,18 @@ app.post('/games/uploads', upload.single('myFile'), (req, res)=>{
     //return res.redirect(`https://vuesupergames.herokuapp.com/?auth=true&touser=${req.query.touser}&searchText=none&gamename=${req.query.gamename}&gamedescription=${req.query.gamedescription}&gamegenre=${req.query.gamegenre}&gamesender=${req.query.gamesender}&gamecost=${req.query.gamecost}&gameimageurl=${req.query.gameimageurl}&gamefree=${req.query.gamefree}&creategame=true`)
     // res.redirect(`http://localhost:8080/?auth=true&touser=${req.query.touser}&searchText=none&`)
 })
+
+app.get('/games/getimage', (req, res)=>{
+        
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    res.setHeader("Access-Control-Allow-Headers", "X-Requested-With, X-Access-Token, X-Socket-ID, Content-Type");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE");
+    
+    res.sendFile(__dirname + `/uploads/${req.query.gamename}.png`)
+
+})
+
 
 /*
     начало бекенда игры

@@ -18,7 +18,8 @@
                               <img width="85px" height="85px" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" />
                             </div>
                             <div v-else-if="!game.imageurl.includes('empty')">
-                                <img width="85px" height="85px" :src="game.imageurl" />
+                                <!-- <img width="85px" height="85px" :src="game.imageurl" /> -->
+                                <img width="85px" height="85px" :src="`https://vuesupergames.herokuapp.com/games/getimage?gamename=${game.name}`" />
                             </div>
                         </h5>
                         <div class="card-body">
@@ -58,7 +59,9 @@
                             </div>
                             <div v-else-if="!game.imageurl.includes('empty')">
                             
-                                <img width="85px" height="85px" :src="game.imageurl" />
+                                <!-- <img width="85px" height="85px" :src="game.imageurl" /> -->
+                                <img width="85px" height="85px" :src="`https://vuesupergames.herokuapp.com/games/getimage?gamename=${game.name}`" />
+
                             </div>
                         </h5>
                         <div class="card-body">
@@ -97,7 +100,10 @@
                                 <img width="85px" height="85px" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" />
                             </div>
                             <div v-else-if="!game.imageurl.includes('empty')">
-                                <img width="85px" height="85px" :src="game.imageurl" />
+
+                                <!-- <img width="85px" height="85px" :src="game.imageurl" /> -->
+                                <img width="85px" height="85px" :src="`https://vuesupergames.herokuapp.com/games/getimage?gamename=${game.name}`" />
+                            
                             </div>
                         </h5>
                         <div class="card-body">
@@ -136,7 +142,10 @@
                                 <img width="85px" height="85px" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" />
                             </div>
                             <div v-else-if="!game.imageurl.includes('empty')">
+                                
                                 <img width="85px" height="85px" :src="game.imageurl" />
+                                <img width="85px" height="85px" :src="`https://vuesupergames.herokuapp.com/games/getimage?gamename=${game.name}`" />
+
                             </div>
                         </h5>
                         <div class="card-body">
