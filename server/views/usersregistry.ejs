@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <style>
+        .main {
+            width: 50%;
+            margin:auto;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+
+        <!-- header -->
+        <%- include('./includes/headerauth.ejs') %>
+        <!-- <form onsubmit="return null" class="form-signin text-center"> -->
+         <div class="main">
+            <img src="https://www.gstatic.com/android/market_images/web/play_prism_hlock_2x.png" width="30%" height="30%" alt="">
+            
+            <h1 class="h3 mb-3 font-weight-normal">Зарегестрируйтесь</h1>
+            
+            <label for="inputEmail" class="sr-only">Email</label>
+            <input type="email" id="inputEmail" class="developeremail form-control" placeholder="Email address" required="" autofocus="">
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input type="password" id="inputPassword" class="developerpassword form-control" placeholder="Password" required="">
+            <label for="inputEmail" class="sr-only">Name</label>
+            <input type="text" id="inputEmail" class="developername form-control" placeholder="Name" required="" autofocus="">
+            <label for="inputEmail" class="sr-only">Age</label>
+            <input type="text" id="inputEmail" class="developerage form-control" placeholder="Age" required="" autofocus="">
+            <label for="inputEmail" class="sr-only">Name</label>
+            <input type="text" id="inputEmail" class="developerimageurl form-control" placeholder="imageurl" required="" autofocus="">
+            
+            <div class="checkbox mb-3">
+            </div>
+            <button class="btn btn-lg btn-primary btn-block registerBtn">Зарегестрироваться</button>
+            <MyFooter/>
+        </div>   
+        <!-- footer -->
+        <%- include("./includes/footer.ejs") %>
+    </div>
+</body>
+<script src="https://unpkg.com/vue"></script>
+
+<script>
+    
+    document.querySelector('.registerBtn').addEventListener('click', async function(){
+        let developeremail = document.querySelector('.developeremail').value
+        let developerpassword = document.querySelector('.developerpassword').value
+        let developername = document.querySelector('.developername').value
+        let developerage = Number(document.querySelector('.developerage').value)
+        let developerimageurl = document.querySelector('.developerimageurl').value
+        
+    
+        localStorage.setItem("userlogin", "true")
+
+        location.href = `/users/usercreatesuccess?developeremail=${developeremail}&developerpassword=${developerpassword}&developername=${developername}&developerage=${developerage}&developerimageurl=${developerimageurl}`  
+    })
+</script>
+</html>

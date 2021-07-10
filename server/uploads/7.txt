@@ -1,0 +1,39 @@
+SBT (Scala Build Tool)
+Less
+akka
+ассинхроные http запрос
+Sphinx
+scala
+scala граф библиотека
+----------------
+десктопные приложения на языках разметки
+---------------
+Maven
+POM код
+---------------
+<!DOCTYPE HTML>
+<html>
+ <head>
+  <meta charset="utf-8">
+  <title>Событие onmousedown</title>
+  <script>
+   var i = 0; 
+   function counter(){
+    i++;
+    document.getElementById("layer2").innerHTML += i + " ";
+   }
+  </script>
+  <style type="text/css">
+   #layer1 {
+    background: #fc0; /* Цвет фона */
+    padding: 30px 10px; /* Поля вокруг текста */
+   }
+  </style>
+ </head>
+ <body onmouseup="if(window.interval) clearInterval(interval)">
+   <div id="layer1" onmousedown="interval=setInterval('counter()',50)">
+    Щелкните внутри
+   </div>
+   <div id="layer2"></div>
+ </body>
+</html>
