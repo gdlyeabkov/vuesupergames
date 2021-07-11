@@ -931,6 +931,7 @@ app.post('/games/uploads', upload.array('myFiles', 2), (req, res)=>{
                         if(err){
                             return
                         } else {
+                            // return res.redirect("https://vuesupergames.herokuapp.com/")
                             return res.redirect("https://vuesupergames.herokuapp.com/")
                         } 
                     })

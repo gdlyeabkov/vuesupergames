@@ -5,10 +5,12 @@
     <div class="main">
       
       <!-- <img class="mb-4" :src="gameImage" alt="" width="72" height="72"> -->
+      <!-- <img width="85px" height="85px" :src="`https://vuesupergames.herokuapp.com/games/getimage?gamename=${gameName}`" /> -->
       <img width="85px" height="85px" :src="`https://vuesupergames.herokuapp.com/games/getimage?gamename=${gameName}`" />
 
       <button v-if="!downloadYet" style="margin-left: 25px;" @click="install()" type="button" class="installBtn btn btn-primary">Установить</button>
-      <button disabled v-else-if="downloadYet" style="margin-left: 25px;" @click="install()" type="button" class="installBtn btn btn-primary">Установлено</button>
+      <button disabled v-else-if="downloadYet" style="margin-left: 25px;" type="button" class="installBtn btn btn-primary">Установлено</button>
+
       <h1 class="gameName">{{ gameName }}</h1>
       <p>Описание: {{ gameDesc }}</p>
       <p>{{ gameFree.includes("true") ? "Бесплатная" : "Цена: " + gameCost }}</p>
@@ -235,8 +237,10 @@ export default {
         this.ratio = this.likes !== 0 && this.downloads !== 0  ? (this.likes / this.downloads).toString().substr(0, 3) : 0
         this.downloaded = JSON.parse(result).downloaded
         // this.downloadYet = this.downloaded.includes(decoded.useremail)
-        this.downloadYet = this.downloaded.findIndex((download) => download.name.includes(decoded.developeremail.split('@')[0])) >= 0
-
+        this.downloadYet = this.downloaded.findIndex((download) => download.name.includes(decoded.useremail)) >= 0
+        
+        console.log("decoded.developeremail: ", decoded.useremail)
+        console.log("downloadYet: ", this.downloadYet)
       });
     })
   },
