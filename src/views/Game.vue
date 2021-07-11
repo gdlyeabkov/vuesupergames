@@ -155,8 +155,9 @@ export default {
           this.$router.push({ name: "UsersLogin" })
         }
         
-        window.location = `https://vuesupergames.herokuapp.com/games/downloads?gameid=${this.$route.query.gameid}&gamename=${this.gameName}&gameCost=${this.gameCost}&gameFree=${this.gameFree}&gameDesc=${this.gameDesc}&gameCountLikes=${this.gameCountLikes}&gameBy=${this.gameBy}&gameDateOfCreated=${this.gameDateOfCreated}&gameCountDownloads=${this.gameCountDownloads}&gameImage=${this.gameImage}&gameGenre=${this.gameGenre}&touser=${this.touser}`
-        
+        // window.location = `https://vuesupergames.herokuapp.com/games/downloads?gameid=${this.$route.query.gameid}&gamename=${this.gameName}&gameCost=${this.gameCost}&gameFree=${this.gameFree}&gameDesc=${this.gameDesc}&gameCountLikes=${this.gameCountLikes}&gameBy=${this.gameBy}&gameDateOfCreated=${this.gameDateOfCreated}&gameCountDownloads=${this.gameCountDownloads}&gameImage=${this.gameImage}&gameGenre=${this.gameGenre}&touser=${this.touser}`
+        window.location = `https://brief-malleable-microraptor.glitch.me/games/downloads?gameid=${this.$route.query.gameid}&gamename=${this.gameName}&gameCost=${this.gameCost}&gameFree=${this.gameFree}&gameDesc=${this.gameDesc}&gameCountLikes=${this.gameCountLikes}&gameBy=${this.gameBy}&gameDateOfCreated=${this.gameDateOfCreated}&gameCountDownloads=${this.gameCountDownloads}&gameImage=${this.gameImage}&gameGenre=${this.gameGenre}&touser=${this.touser}`
+
         // await fetch(`http://localhost:4000/games/downloads?gameid=${this.$route.query.gameid}&gamename=${this.gameName}&gameCost=${this.gameCost}&gameFree=${this.gameFree}&gameDesc=${this.gameDesc}&gameCountLikes=${this.gameCountLikes}&gameBy=${this.gameBy}&gameDateOfCreated=${this.gameDateOfCreated}&gameCountDownloads=${this.gameCountDownloads}&gameImage=${this.gameImage}&gameGenre=${this.gameGenre}&touser=${this.touser}`, {
         //   mode: 'cors',
         //   method: 'GET'
