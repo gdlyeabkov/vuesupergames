@@ -27,7 +27,7 @@
           <option value="matchthree">matchthree</option>
       </select>
       
-      <form class="registerForm" enctype="multipart/form-data"  method="POST" :action="`https://vuesupergames.herokuapp.com/games/uploads?gamename=${gamename}&gamefree=${gamefree}&gamedescription=${gamedescription}&gamecost=${gamecost}&gameimageurl=${gameimageurl}&gamegenre=${gamegenre}&touser=${touser}`">
+      <form class="registerForm" enctype="multipart/form-data"  method="POST" :action="`https://brief-malleable-microraptor.glitch.me/games/uploads?gamename=${gamename}&gamefree=${gamefree}&gamedescription=${gamedescription}&gamecost=${gamecost}&gameimageurl=${gameimageurl}&gamegenre=${gamegenre}&touser=${touser}`">
         
         <!-- <label for="inputFile" class="sr-only">Select image:</label> -->
         <!-- <input style="max-width: 300px; margin: auto;" type="file" id="inputFile" class="gamefile form-control" name="myFiles" placeholder="file" required=""> -->

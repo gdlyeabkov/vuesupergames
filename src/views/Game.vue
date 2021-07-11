@@ -6,7 +6,7 @@
       
       <!-- <img class="mb-4" :src="gameImage" alt="" width="72" height="72"> -->
       <!-- <img width="85px" height="85px" :src="`https://vuesupergames.herokuapp.com/games/getimage?gamename=${gameName}`" /> -->
-      <img width="85px" height="85px" :src="`https://vuesupergames.herokuapp.com/games/getimage?gamename=${gameName}`" />
+      <img width="85px" height="85px" :src="`https://brief-malleable-microraptor.glitch.me/games/getimage?gamename=${gameName}`" />
 
       <button v-if="!downloadYet" style="margin-left: 25px;" @click="install()" type="button" class="installBtn btn btn-primary">Установить</button>
       <button disabled v-else-if="downloadYet" style="margin-left: 25px;" type="button" class="installBtn btn btn-primary">Установлено</button>
