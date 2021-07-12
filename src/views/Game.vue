@@ -8,7 +8,7 @@
       <!-- <img width="85px" height="85px" :src="`https://vuesupergames.herokuapp.com/games/getimage?gamename=${gameName}`" /> -->
       <img width="85px" height="85px" :src="`https://brief-malleable-microraptor.glitch.me/games/getimage?gamename=${gameName}`" />
 
-      <button v-if="!downloadYet" style="margin-left: 25px;" @click="install()" type="button" class="installBtn btn btn-primary">Установить</button>
+      <button ref="installButton" v-if="!downloadYet" style="margin-left: 25px;" @click="install()" type="button" class="installBtn btn btn-primary">Установить</button>
       <button disabled v-else-if="downloadYet" style="margin-left: 25px;" type="button" class="installBtn btn btn-primary">Установлено</button>
 
       <h1 class="gameName">{{ gameName }}</h1>
@@ -155,6 +155,8 @@ export default {
           this.$router.push({ name: "UsersLogin" })
         }
         
+        this.$refs.installButton.setAttribute('disabled', true);
+
         // window.location = `https://vuesupergames.herokuapp.com/games/downloads?gameid=${this.$route.query.gameid}&gamename=${this.gameName}&gameCost=${this.gameCost}&gameFree=${this.gameFree}&gameDesc=${this.gameDesc}&gameCountLikes=${this.gameCountLikes}&gameBy=${this.gameBy}&gameDateOfCreated=${this.gameDateOfCreated}&gameCountDownloads=${this.gameCountDownloads}&gameImage=${this.gameImage}&gameGenre=${this.gameGenre}&touser=${this.touser}`
         window.location = `https://brief-malleable-microraptor.glitch.me/games/downloads?gameid=${this.$route.query.gameid}&gamename=${this.gameName}&gameCost=${this.gameCost}&gameFree=${this.gameFree}&gameDesc=${this.gameDesc}&gameCountLikes=${this.gameCountLikes}&gameBy=${this.gameBy}&gameDateOfCreated=${this.gameDateOfCreated}&gameCountDownloads=${this.gameCountDownloads}&gameImage=${this.gameImage}&gameGenre=${this.gameGenre}&touser=${this.touser}`
 
@@ -235,7 +237,7 @@ export default {
         this.gameGenre = JSON.parse(result).gameGenre
         console.log(JSON.parse(result))
 
-        this.ratio = this.likes !== 0 && this.downloads !== 0  ? (this.likes / this.downloads).toString().substr(0, 3) : 0
+        this.ratio = this.gameCountLikes > 0 && this.gameCountDownloads > 0  ? (this.gameCountLikes / this.gameCountDownloads).toString().substr(0, 3) : 0
         this.downloaded = JSON.parse(result).downloaded
         // this.downloadYet = this.downloaded.includes(decoded.useremail)
         this.downloadYet = this.downloaded.findIndex((download) => download.name.includes(decoded.useremail)) >= 0

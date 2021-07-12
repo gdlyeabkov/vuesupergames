@@ -5,7 +5,7 @@
     <div class="main">
       <h1 style="text-align: center;">Мои установленные приложения: </h1>
           <div v-if="myGames.length >= 1">
-              <div v-for="game in myGames">
+              <div v-for="game, gameIndex in myGames">
                   <div class="card flexCard">
                       
                       <h5 class="card-header">
@@ -23,7 +23,7 @@
                           <router-link tag="h6"  style="cursor: pointer; color: blue; text-decoration: underline;" :to="{ name: 'Game', query: { gameid: game._id, touser: game.sender } }">{{ game.name.substring(0, 50) }}</router-link>
                           <p>{{ game.description.substring(0, 50) }}</p>
                           <div v-for="(star, starIndex) in 5">
-                            <span @mouseover="fillStar(starIndex)" @mouseout="resetStar(starIndex)" @click="evaluate(game._id, star, game.name)" style="color:grey; float:left; cursor: pointer;" class="material-icons customstar">
+                            <span @mouseover="fillStar(starIndex, gameIndex)" @mouseout="resetStar(starIndex)" @click="evaluate(game._id, star, game.name)" style="color:grey; float:left; cursor: pointer;" class="material-icons customstar">
                               star_rate
                             </span>  
                           </div>
@@ -99,15 +99,22 @@ export default {
     })
   },
   methods: {
-        fillStar(starIndex){
+    fillStar(starIndex, multiplier){
       console.log("starIndex: ", starIndex)
-      for(let i = 0; i <= starIndex; i++){
+      console.log("multiplier: ", multiplier)
+      if(multiplier <= 0){
+        multiplier = 0
+      }
+      // else if(multiplier >= 1){
+      //   multiplier + 1 * 5
+      // }
+      for(let i = 0 + 5 * multiplier; i <= starIndex + 5 * multiplier; i++){
         document.querySelectorAll(".customstar")[i].style.cssText += "color: black;"
       }
     },
     resetStar(starIndex){
       console.log("starIndex: ", starIndex)
-      for(let i = 0; i <= starIndex; i++){
+      for(let i = 0; i <= document.querySelectorAll(".customstar").length - 1; i++){
         document.querySelectorAll(".customstar")[i].style.cssText += "color: grey; display: inline;"
       }
     },

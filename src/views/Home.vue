@@ -27,7 +27,7 @@
                             <router-link :to="{ name: 'Game', query: { gameid: game._id, touser: touser } }">{{ game.name.substring(0, 25) }}</router-link>
                             <p>{{ game.description.substring(0, 25) }}</p>
                             <div v-for="(star, starIndex) in 5">
-                                <span @mouseover="fillStar(starIndex)" @mouseout="resetStar(starIndex)" @click="evaluate(game.id, star, game.name)" style="color:grey; float:left; cursor: pointer;" class="material-icons customstar">
+                                <span @mouseover="fillStar(starIndex, 'popular', game.name)" @mouseout="resetStar(starIndex)" @click="evaluate(game.id, star, game.name)" style="color:grey; float:left; cursor: pointer;" class="material-icons customstar">
                                     star_rate
                                 </span>  
                             </div>
@@ -69,7 +69,7 @@
                             <router-link :to="{ name: 'Game', query: { 'gameid': game._id, 'touser': touser } }">{{ game.name.substring(0, 25) }}</router-link>
                             <p>{{ game.description.substring(0, 25) }}</p>
                             <div v-for="(star, starIndex) in 5">
-                                <span @mouseover="fillStar(starIndex)" @mouseout="resetStar(starIndex)" @click="evaluate(game._id, star, game.name)" style="color:grey; float:left; cursor: pointer;" class="material-icons customstar">
+                                <span @mouseover="fillStar(starIndex, 'arcade', game.name)" @mouseout="resetStar(starIndex)" @click="evaluate(game._id, star, game.name)" style="color:grey; float:left; cursor: pointer;" class="material-icons customstar">
                                     star_rate
                                 </span>  
                             </div>
@@ -112,7 +112,7 @@
                             <router-link :to="{ name: 'Game', query: { gameid: game._id, touser: touser } }">{{ game.name.substring(0, 25) }}</router-link>
                             <p>{{ game.description.substring(0, 25) }}</p>
                             <div v-for="(star, starIndex) in 5">
-                                <span @mouseover="fillStar(starIndex)" @mouseout="resetStar(starIndex)" @click="evaluate(game.id, star, game.name)" style="color:grey; float:left; cursor: pointer;" class="material-icons customstar">
+                                <span @mouseover="fillStar(starIndex, 'quest', game.name)" @mouseout="resetStar(starIndex)" @click="evaluate(game.id, star, game.name)" style="color:grey; float:left; cursor: pointer;" class="material-icons customstar">
                                     star_rate
                                 </span>  
                             </div>
@@ -153,8 +153,8 @@
                         <div class="card-body">
                             <router-link :to="{ name: 'Game', query: { gameid: game._id, touser: touser } }">{{ game.name.substring(0, 25) }}</router-link>
                             <p>{{ game.description.substring(0, 25) }}</p>
-                            <div v-for="(star, starIndex) in 5">
-                                <span @mouseover="fillStar(starIndex)" @mouseout="resetStar(starIndex)" @click="evaluate(game.id, star, game.name)" style="color:grey; float:left; cursor: pointer;" class="material-icons customstar">
+                            <div v-for="(star, starIndex) in 5" >
+                                <span @mouseover="fillStar(starIndex, 'match', game.name)" @mouseout="resetStar(starIndex)" @click="evaluate(game.id, star, game.name)" style="color:grey; float:left; cursor: pointer;" class="material-icons customstar">
                                     star_rate
                                 </span>  
                             </div>
@@ -193,15 +193,70 @@ export default {
     }
   },
   methods: {
-      fillStar(starIndex){
-      console.log("starIndex: ", starIndex)
-      for(let i = 0; i <= starIndex; i++){
+      fillStar(starIndex, starsFor, gameName){
+      
+       let gamesForPopular = this.allGames.filter(game => {
+          if(game.genre.includes("popular")){
+              return true
+          }
+          return false
+      })
+      let countGamesForPopular = gamesForPopular.length
+      
+      let gamesForArcade = this.allGames.filter(game => {
+          if(game.genre.includes("arcade")){
+              return true
+          }
+          return false
+      })
+      let countGamesForArcade = gamesForArcade.length
+      
+      let gamesForQuest = this.allGames.filter(game => {
+          if(game.genre.includes("quest")){
+              return true
+          }
+          return false
+      })
+      let countGamesForQuest = gamesForQuest.length
+      
+      let gamesForMatch = this.allGames.filter(game => {
+          if(game.genre.includes("match")){
+              return true
+          }
+          return false
+      })
+      let countGamesForMatch = gamesForMatch.length
+
+      console.log("countGamesForPopular: ", countGamesForPopular)
+      console.log("countGamesForArcade: ", countGamesForArcade)
+      console.log("countGamesForQuest: ", countGamesForQuest)
+      console.log("countGamesForMatch: ", countGamesForMatch)
+      
+      let gameIndex = 0
+      let offset = 0
+        if(starsFor.includes("popular")){
+            offset = 0
+            gameIndex = gamesForPopular.findIndex((game) => game.name.includes(gameName))
+        } else if(starsFor.includes("arcade")){
+            offset = countGamesForPopular
+            gameIndex = gamesForArcade.findIndex((game) => game.name.includes(gameName))
+        } else if(starsFor.includes("quest")){
+            offset = countGamesForArcade + countGamesForPopular
+            gameIndex = gamesForQuest.findIndex((game) => game.name.includes(gameName))
+        } else if(starsFor.includes("match")){
+            offset = countGamesForArcade + countGamesForQuest + countGamesForPopular
+            gameIndex = gamesForMatch.findIndex((game) => game.name.includes(gameName))
+        }
+    
+    console.log("starIndex: ", starIndex)
+      
+      for(let i = 0 + offset * 5 + gameIndex * 5; i <= starIndex + offset * 5 + gameIndex * 5; i++){
         document.querySelectorAll(".customstar")[i].style.cssText += "color: black;"
       }
     },
     resetStar(starIndex){
       console.log("starIndex: ", starIndex)
-      for(let i = 0; i <= starIndex; i++){
+      for(let i = 0; i <= document.querySelectorAll(".customstar").length - 1; i++){
         document.querySelectorAll(".customstar")[i].style.cssText += "color: grey; display: inline;"
       }
     },
