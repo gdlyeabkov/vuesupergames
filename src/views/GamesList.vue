@@ -152,6 +152,9 @@ export default {
           console.log(JSON.parse(result))
           // this.$router.push({ name: "GamesList", query: { touser: this.touser } })
           // window.location.reload()
+
+          this.$router.push({ name: "Home", query: { auth: "true", touser: this.touser, searchText: "none" } })
+
         });
       })
     }
