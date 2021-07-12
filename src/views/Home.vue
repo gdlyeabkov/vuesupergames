@@ -27,7 +27,7 @@
                             <router-link :to="{ name: 'Game', query: { gameid: game._id, touser: touser } }">{{ game.name.substring(0, 25) }}</router-link>
                             <p>{{ game.description.substring(0, 25) }}</p>
                             <div v-for="(star, starIndex) in 5">
-                                <span @mouseover="fillStar(starIndex, 'popular', game.name)" @mouseout="resetStar(starIndex)" @click="evaluate(game.id, star, game.name)" style="color:grey; float:left; cursor: pointer;" class="material-icons customstar">
+                                <span @mouseover="fillStar(starIndex, 'popular', game.name)" @mouseout="resetStar(starIndex)" @click="evaluate(game.id, star, game.name, game._id)" style="color:grey; float:left; cursor: pointer;" class="material-icons customstar">
                                     star_rate
                                 </span>  
                             </div>
@@ -265,9 +265,9 @@ export default {
             if(err){
                 this.$router.push({ name: "UsersLogin" })
             }
-        fetch(`https://vuesupergames.herokuapp.com/games/likes?gameid=${id}&gamename=${name}&likes=${likes}&touser=${this.touser}`, {
-            mode: 'cors',
-            method: 'GET'
+            fetch(`https://vuesupergames.herokuapp.com/games/likes?gameid=${id}&gamename=${name}&likes=${likes}&touser=${this.touser}`, {
+                mode: 'cors',
+                method: 'GET'
             }).then(response => response.body).then(rb  => {
                 const reader = rb.getReader()
                 return new ReadableStream({
@@ -275,9 +275,9 @@ export default {
                     function push() {
                     reader.read().then( ({done, value}) => {
                         if (done) {
-                        console.log('done', done);
-                        controller.close();
-                        return;
+                            console.log('done', done);
+                            controller.close();
+                            return;
                         }
                         controller.enqueue(value);
                         console.log(done, value);
@@ -293,7 +293,10 @@ export default {
             .then(result => {
                 console.log(JSON.parse(result))
                 // this.$router.push({ name: "GamesList", query: { touser: this.touser } })
-                window.location.reload()
+                // window.location.reload()
+
+                this.$router.push({ name: "Game", query: { gameid: gameId, touser: decoded.useremail } })
+
             });
         })
     }

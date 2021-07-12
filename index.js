@@ -350,16 +350,19 @@ app.get('/users/check', (req,res)=>{
     if(req.query.developerpassword !== ''){
         let query =  GameDeveloperModel.findOne({'email': req.query.developeremail}, function(err, developer){
             if (err){
-                res.json({ "status": "Error" })
+                return res.json({ "status": "Error" })
             } else {
-                const passwordCheck = bcrypt.compareSync(req.query.developerpassword, developer.password) && req.query.developerpassword !== ''
-                if(developer != null && developer != undefined && passwordCheck){
-                    res.json({ "status": "OK", "developeremail": developer.email })
+                let loginCheck = req.query.developeremail === developer.email
+                let passwordCheck = bcrypt.compareSync(req.query.developerpassword, developer.password) && req.query.developerpassword !== ''
+                if(developer != null && developer != undefined && loginCheck && passwordCheck){
+                    return res.json({ "status": "OK", "developeremail": developer.email })
                 } else {
-                    res.json({ "status": "Error" })
+                    return res.json({ "status": "Error" })
                 }
             }
         })
+    } else {
+        return res.json({ "status": "Error" })
     }
 })
 

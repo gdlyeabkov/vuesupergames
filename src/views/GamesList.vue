@@ -20,7 +20,7 @@
                           </div>
                       </h5>
                       <div class="card-body">
-                          <router-link tag="h6"  style="cursor: pointer; color: blue; text-decoration: underline;" :to="{ name: 'Game', query: { gameid: game._id, touser: game.sender } }">{{ game.name.substring(0, 50) }}</router-link>
+                          <router-link tag="h6"  style="cursor: pointer; color: blue; text-decoration: underline;" :to="{ name: 'Game', query: { gameid: game._id, touser: currentDeveloper } }">{{ game.name.substring(0, 50) }}</router-link>
                           <p>{{ game.description.substring(0, 50) }}</p>
                           <div v-for="(star, starIndex) in 5">
                             <span @mouseover="fillStar(starIndex, gameIndex)" @mouseout="resetStar(starIndex)" @click="evaluate(game._id, star, game.name)" style="color:grey; float:left; cursor: pointer;" class="material-icons customstar">
@@ -56,6 +56,7 @@ export default {
   name: 'GamesList',
   data(){
     return {
+      currentDeveloper: "",
       token: '',
       myGames: []
     }
@@ -66,6 +67,7 @@ export default {
       if(err){
         this.$router.push({ name: "UsersLogin" })
       }
+      this.currentDeveloper = decoded.useremail
       fetch(`https://vuesupergames.herokuapp.com/games/list?auth=true&touser=${this.$route.query.touser}`, {
       mode: 'cors',
       method: 'GET'
