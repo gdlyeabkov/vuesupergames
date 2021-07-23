@@ -27,7 +27,7 @@
                             <router-link :to="{ name: 'Game', query: { gameid: game._id, touser: touser } }">{{ game.name.substring(0, 25) }}</router-link>
                             <p>{{ game.description.substring(0, 25) }}</p>
                             <div v-for="(star, starIndex) in 5">
-                                <span @mouseover="fillStar(starIndex, 'popular', game.name)" @mouseout="resetStar(starIndex)" @click="evaluate(game.id, star, game.name, game._id)" style="color:grey; float:left; cursor: pointer;" class="material-icons customstar">
+                                <span @mouseover="fillStar(starIndex, 'popular', game.name)" @mouseout="resetStar(starIndex)" @click="evaluate(game._id, star, game.name)" style="color:grey; float:left; cursor: pointer;" class="material-icons customstar">
                                     star_rate
                                 </span>  
                             </div>
@@ -112,7 +112,7 @@
                             <router-link :to="{ name: 'Game', query: { gameid: game._id, touser: touser } }">{{ game.name.substring(0, 25) }}</router-link>
                             <p>{{ game.description.substring(0, 25) }}</p>
                             <div v-for="(star, starIndex) in 5">
-                                <span @mouseover="fillStar(starIndex, 'quest', game.name)" @mouseout="resetStar(starIndex)" @click="evaluate(game.id, star, game.name)" style="color:grey; float:left; cursor: pointer;" class="material-icons customstar">
+                                <span @mouseover="fillStar(starIndex, 'quest', game.name)" @mouseout="resetStar(starIndex)" @click="evaluate(game._id, star, game.name)" style="color:grey; float:left; cursor: pointer;" class="material-icons customstar">
                                     star_rate
                                 </span>  
                             </div>
@@ -154,7 +154,7 @@
                             <router-link :to="{ name: 'Game', query: { gameid: game._id, touser: touser } }">{{ game.name.substring(0, 25) }}</router-link>
                             <p>{{ game.description.substring(0, 25) }}</p>
                             <div v-for="(star, starIndex) in 5" >
-                                <span @mouseover="fillStar(starIndex, 'match', game.name)" @mouseout="resetStar(starIndex)" @click="evaluate(game.id, star, game.name)" style="color:grey; float:left; cursor: pointer;" class="material-icons customstar">
+                                <span @mouseover="fillStar(starIndex, 'match', game.name)" @mouseout="resetStar(starIndex)" @click="evaluate(game._id, star, game.name)" style="color:grey; float:left; cursor: pointer;" class="material-icons customstar">
                                     star_rate
                                 </span>  
                             </div>
@@ -295,7 +295,7 @@ export default {
                 // this.$router.push({ name: "GamesList", query: { touser: this.touser } })
                 // window.location.reload()
 
-                this.$router.push({ name: "Game", query: { gameid: gameId, touser: decoded.useremail } })
+                this.$router.push({ name: "Game", query: { gameid: id, touser: decoded.useremail } })
 
             });
         })
